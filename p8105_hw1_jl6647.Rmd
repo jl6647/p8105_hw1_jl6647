@@ -39,6 +39,8 @@ The datasets include 15 variables:
 
 ### Size of datasets
 
+#### `nrow` and `ncol` is used when determining the size of datasets 
+
 `Row`: `r nrow(early_january_weather)`
 
 `Column`: `r ncol(early_january_weather)`
@@ -59,7 +61,7 @@ library(ggplot2)
 
 ## HW1 Problem_2
 
-### Data Frame of numeric, logical, character and factor vectors
+### Data Frame of numeric, logical, character and factor variables
 ```{r problem2_df,echo=FALSE}
 library(tidyverse)
 set.seed(1)
@@ -71,14 +73,24 @@ problem2_df <- tibble(
 )
 print(problem2_df)
 ```
-### The mean of each variables
-In the console, warning occurs as `argument is not numeric or logical: returning NA` when running character or factor vectors
-```{r mean_df,echo=FALSE}
-  mean_numeric = mean(problem2_df$norm_sample)    # Works, as it's a numeric variable
-  mean_logical = mean(problem2_df$logi_vector)    # Won't work, logical variable
-  mean_character = mean(problem2_df$char_vector)   # Won't work, character variable
-  mean_factor = mean(problem2_df$fact_vector)       # Won't work, factor variable
+
+
+### Apply `as.numeric` function to logical, character, and factor variables to interpret variables into numbers
+```{r as.numeric}
+as.numeric_norm <- as.numeric(pull(problem2_df,norm_sample))
+as.numeric_logi <- as.numeric(pull(problem2_df,logi_vector))
+as.numeric_char <- as.numeric(pull(problem2_df,char_vector))
+as.numeric_fact <- as.numeric(pull(problem2_df,fact_vector))
 ```
+### The mean of each variables
+In the console, warning occurs as `argument is not numeric or logical: returning NA` when running character or factor vectors if `as.numeric` function does not apply
+```{r mean_df,echo=FALSE}
+mean(as.numeric_norm)    # Works, as it's a numeric variable
+mean(as.numeric_logi)    # Works, as it's a numeric variable
+mean(as.numeric_char)    # Won't work, character variable
+mean(as.numeric_fact)    # Won't work, factor variable
+```
+
 
 
 
