@@ -1,0 +1,85 @@
+---
+title: "p8105_hw1_jl6647"
+author: "Jiatong Li"
+date: "2023-09-14"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+
+data(early_january_weather, package = "moderndive")
+```
+
+## HW1 Problem_1
+
+### Description of datasets
+
+The datasets include 15 variables: 
+
+`origin`: Weather station. Named origin to facilitate merging with nycflights13::flights data.
+
+`year`, `month`, `day`, `hour`: Time of recording.
+
+`temp`,`dewp`: Temperature and dewpoint in F.
+
+`humid`: Relative humidity.
+
+`wind_dir`, `wind_speed`, `wind_gust`: Wind direction (in degrees), speed and gust speed (in mph).
+
+`precip`: Precipitation, in inches.
+
+`pressure`: Sea level pressure in millibars.
+
+`visib`: Visibility in miles.
+
+`time_hour`: Date and hour of the recording as a POSIXct date.
+
+### Size of datasets
+
+`Row`: `r nrow(early_january_weather)`
+
+`Column`: `r ncol(early_january_weather)`
+
+### Mean temperature
+
+`Mean temperature`: `r mean(early_january_weather$temp)`
+
+### A scatterplot of temp (y) vs time_hour (x)
+  
+```{r temp_time, echo=FALSE}
+library(ggplot2)
+  plot_1 <- ggplot(early_january_weather, aes(x = time_hour, y = temp, color = humid)) + geom_point()
+  plot_1
+  ggsave("scatterplot.png", plot = plot_1)
+```
+
+
+## HW1 Problem_2
+
+### Data Frame of numeric, logical, character and factor vectors
+```{r problem2_df,echo=FALSE}
+library(tidyverse)
+set.seed(1)
+problem2_df <- tibble(
+  norm_sample = rnorm(10),
+  logi_vector = norm_sample > 0,
+  char_vector = c("A", "B", "C", "D", "E", "F", "G", "H", "I", "J"),
+  fact_vector = factor(c("Low", "Medium", "High", "Low", "Medium", "High", "Low", "Medium", "High", "Low"))
+)
+print(problem2_df)
+```
+### The mean of each variables
+In the console, warning occurs as `argument is not numeric or logical: returning NA` when running character or factor vectors
+```{r mean_df,echo=FALSE}
+  mean_numeric = mean(problem2_df$norm_sample)    # Works, as it's a numeric variable
+  mean_logical = mean(problem2_df$logi_vector)    # Won't work, logical variable
+  mean_character = mean(problem2_df$char_vector)   # Won't work, character variable
+  mean_factor = mean(problem2_df$fact_vector)       # Won't work, factor variable
+```
+
+
+
+
